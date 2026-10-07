@@ -122,7 +122,7 @@ ${
   tool
     ? '<script src="/lib.js" defer></script><script src="/engine.js" defer></script>'
     : ''
-}</body></html>`.replace(
+}<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script><script defer src="/_vercel/insights/script.js"></script></body></html>`.replace(
     'Pixel<b>Tools</b>',
     esc(site.name).replace(/^(Pixel)(.*)$/, '$1<b>$2</b>')
   );
