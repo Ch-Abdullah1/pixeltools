@@ -1,0 +1,52 @@
+// Add a tool: add an entry here (mode must exist in src/engine.js), then run `node build.js`.
+const FMT = { jpg: "JPG", png: "PNG", webp: "WebP" };
+const IN = "image/jpeg,image/png,image/webp";
+const conv = (from, to, extra) => ({
+  slug: `${from}-to-${to}`, name: `${FMT[from]} to ${FMT[to]}`, category: "Convert", mode: "convert", out: to, action: "Convert", in: IN,
+  h1: `Free ${FMT[from]} to ${FMT[to]} Converter`,
+  description: `Free online ${FMT[from]} to ${FMT[to]} converter. Fast, private, and runs directly in your browser.`,
+  seoTitle: `Free ${FMT[from]} to ${FMT[to]} Converter – 100% Free Online`,
+  metaDescription: `Convert ${FMT[from]} to ${FMT[to]} online for free. Files are converted securely inside your browser and never uploaded. Batch conversion and free zip download.`,
+  intro: extra.intro, features: ["100% Free batch conversion", "Download one by one or as a free zip", ...extra.features],
+  faq: extra.faq, related: extra.related, guides: extra.guides, supportedFormats: [FMT[from], FMT[to]]
+});
+module.exports = [
+  { slug: "compress-image", name: "Image Compressor", category: "Compress & resize", mode: "compress", action: "Compress", in: IN,
+    h1: "Free Image Compressor (No Upload)", description: "Free online image compressor. Shrink image file size instantly with a quality slider.",
+    seoTitle: "Free Image Compressor – Compress JPG, PNG, WebP Online",
+    metaDescription: "Compress JPG, PNG and WebP images for free in your browser. Adjust quality, see exact savings, download one or all. 100% free, no sign-up required.",
+    intro: "Reduce image file size by re-encoding at a quality you choose. You see the real before and after size for every file. Photos shrink most as JPG or WebP; PNG files are lossless, so they only shrink by switching format.",
+    features: ["Quality slider from 1 to 100", "Keep format or switch to JPG or WebP", "Real sizes and percentage saved", "100% Free with no file limits or watermarks"],
+    faq: [["Why didn't my PNG get smaller?", "PNG is lossless, so changing quality has no effect. Choose JPG or WebP as the output format for a large reduction, or accept that the file is already compact."], ["What quality should I use?", "For photos, 70 to 80 usually looks the same as the original to the eye while saving a large share of the size."]],
+    related: ["resize-image", "png-to-webp", "jpg-to-webp"], guides: ["how-to-compress-an-image", "jpg-vs-png-vs-webp"], supportedFormats: ["JPG", "PNG", "WebP"] },
+  { slug: "resize-image", name: "Image Resizer", category: "Compress & resize", mode: "resize", action: "Resize", in: IN,
+    h1: "Free Image Resizer by Pixels or Percent", description: "Free online image resizer. Set exact pixel dimensions or scale by percentage instantly.",
+    seoTitle: "Free Image Resizer – Resize JPG, PNG, WebP Online",
+    metaDescription: "Resize images for free to exact pixel dimensions or percentages with aspect ratio lock. Runs 100% in your browser; nothing is uploaded.",
+    intro: "Resize one or many images to exact pixel dimensions or scale them by percentage. With the aspect ratio locked you set the width and the height follows each image's own proportions.",
+    features: ["Exact width and height or percentage", "Aspect ratio lock", "Free batch resizing", "Choose output format"],
+    faq: [["Does resizing reduce quality?", "Making an image smaller keeps it sharp; enlarging it cannot add detail and may look soft."], ["What happens with several images and the lock on?", "Every image gets the width you entered and a height that preserves its own aspect ratio."]],
+    related: ["compress-image", "convert-image", "image-to-pdf"], guides: ["how-to-resize-an-image", "how-to-compress-an-image"], supportedFormats: ["JPG", "PNG", "WebP"] },
+  { slug: "convert-image", name: "Image Converter", category: "Convert", mode: "convert", out: "", action: "Convert", in: IN,
+    h1: "Free Image Converter for JPG, PNG, WebP", description: "Free online image format converter. Pick any target format among JPG, PNG and WebP.",
+    seoTitle: "Free Image Converter – JPG, PNG, WebP Online",
+    metaDescription: "Convert images between JPG, PNG and WebP for free in your browser. Fast batch conversion, free zip download, zero uploads.",
+    intro: "Choose a target format and convert as many images as you like. Transparency is flattened onto white when converting to JPG, because JPG cannot store transparency.",
+    features: ["JPG, PNG and WebP support", "Free batch conversion", "Instant zip download"],
+    faq: [["Which formats are supported?", "JPG, PNG and WebP, the formats every modern browser can decode. WebP output needs a browser that can encode WebP (Chrome, Edge, Firefox, recent Safari)."]],
+    related: ["jpg-to-png", "png-to-webp", "webp-to-jpg"], guides: ["jpg-vs-png-vs-webp"], supportedFormats: ["JPG", "PNG", "WebP"] },
+  conv("jpg", "png", { intro: "Turn JPG photos into PNG files. The result is lossless from this point on, but a JPG converted to PNG cannot regain detail already lost, and file size usually grows.", features: ["Lossless PNG output"], faq: [["Will converting JPG to PNG improve quality?", "No. It stops further quality loss on later edits, but cannot restore what JPG compression already removed."]], related: ["png-to-jpg", "convert-image", "compress-image"], guides: ["jpg-vs-png-vs-webp"] }),
+  conv("png", "jpg", { intro: "Convert PNG images to much smaller JPG files. Transparent areas become white because JPG has no transparency.", features: ["Quality slider", "Transparency flattened to white"], faq: [["What happens to transparent PNG areas?", "They are filled with white."]], related: ["jpg-to-png", "compress-image", "png-to-webp"], guides: ["jpg-vs-png-vs-webp"] }),
+  conv("jpg", "webp", { intro: "WebP files are commonly noticeably smaller than JPG at similar visual quality, which helps pages load faster.", features: ["Quality slider"], faq: [["Is WebP supported everywhere?", "All current major browsers display WebP. Some older software and email clients may not."]], related: ["webp-to-jpg", "compress-image", "png-to-webp"], guides: ["jpg-vs-png-vs-webp"] }),
+  conv("png", "webp", { intro: "Convert PNG graphics and screenshots to WebP, which supports transparency and is usually much smaller.", features: ["Keeps transparency", "Quality slider"], faq: [["Is transparency preserved?", "Yes, WebP supports transparency."]], related: ["webp-to-png", "compress-image", "png-to-jpg"], guides: ["jpg-vs-png-vs-webp"] }),
+  conv("webp", "jpg", { intro: "Need a JPG because an app or website rejects WebP? Convert here. Transparent areas become white.", features: ["Quality slider", "Transparency flattened to white"], faq: [["Why convert WebP to JPG?", "JPG is accepted by nearly every program and upload form."]], related: ["webp-to-png", "jpg-to-webp", "image-to-pdf"], guides: ["jpg-vs-png-vs-webp"] }),
+  conv("webp", "png", { intro: "Convert WebP to lossless PNG, keeping transparency.", features: ["Keeps transparency"], faq: [["Is transparency kept?", "Yes."]], related: ["webp-to-jpg", "png-to-webp", "convert-image"], guides: ["jpg-vs-png-vs-webp"] }),
+  { slug: "image-to-pdf", name: "Image to PDF", category: "PDF", mode: "pdf", action: "Create PDF", in: IN,
+    h1: "Free Image to PDF Converter", description: "Free online tool to combine JPG, PNG and WebP images into a single PDF document.",
+    seoTitle: "Free Image to PDF – Combine Images into PDF Online",
+    metaDescription: "Combine images into a single PDF for free with custom order, page size and margins. Built safely in your browser; 100% free with no uploads.",
+    intro: "Add images, put them in the order you want, choose a page size and create one PDF with a page per image. The PDF is generated on your device.",
+    features: ["Free page reordering", "Fit to image, A4 or Letter", "Margin option", "100% free with no watermarks"],
+    faq: [["Is the PDF text searchable?", "No. Each page is an image."], ["How many images can I add?", "Up to 100 per PDF. Very large sets may run out of memory on low-end phones."]],
+    related: ["compress-image", "resize-image", "png-to-jpg"], guides: ["how-to-convert-images-to-pdf"], supportedFormats: ["JPG", "PNG", "WebP"] }
+];
